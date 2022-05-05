@@ -13,7 +13,7 @@
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
-    <a-scene
+  <!--  <a-scene
         vr-mode-ui="enabled: false"
 		embedded
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
@@ -22,4 +22,18 @@
         
 	<a-camera gps-camera rotation-reader></a-camera>
 	</a-scene>
+ -->
+    <a-scene
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
+	    
+	    
+    
+	<a-camera gps-camera rotation-reader></a-camera>
+	
+	<a-box color="yellow" gps-projected-entity-place="latitude: 16.4639999; longitude: 101.1459265"/>
+	
+	</a-scene>
+	
 </body>
