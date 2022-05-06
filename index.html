@@ -24,11 +24,11 @@
         vr-mode-ui="enabled: false"
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
 
-        <a-camera gps-projected-entity-place rotation-reader></a-camera>
+        <a-camera gps-projected-camera rotation-reader></a-camera>
         
         <!-- <a-box material="color: pink" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128" position="10 1 0"/> -->
         
-        <a-entity gltf-model="./assets/magnemite/scene.gltf" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128;" animation-mixer/>
+        <a-entity gltf-model="./assets/magnemite/scene.gltf" rotation="0 180 0" scale="0.15 0.15 0.15" gps-projected-entity-place="latitude: 16.4639927; longitude: 101.1459128;" animation-mixer/>
         
         <!--<a-text value="This will always face the user." look-at="[gps-camera]" scale="75 75 75" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128;"></a-text>
         -->
