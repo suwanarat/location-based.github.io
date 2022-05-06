@@ -29,10 +29,16 @@
     <a-scene
         vr-mode-ui="enabled: false"
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
+        
+        <a-assets>
+            <a-asset-item id="balloon-obj" src="./assets/Balloon_v1.obj"></a-asset-item>
+            <a-asset-item id="balloon-mtl" src="./assets/Balloon_v1.mtl"></a-asset-item>
+        </a-assets>
 
         <a-camera  gps-camera rotation-reader></a-camera>
         
-        <!-- <a-box material="color: pink" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128" position="10 1 0"/> -->
+         <a-obj-model src="#balloon-obj" mtl="#balloon-mtl" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128"></a-obj-model>
+        <!-- <a-box material="color: pink" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128" position="10 1 0"/> 
         
         <a-entity gltf-model="./assets/magnemite/scene.gltf" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128" animation-mixer/>
         
