@@ -1,42 +1,96 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>GeoAR.js demo</title>
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
-    <script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
-    
-    
+    <title>GeoAR.js demo V9</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
     <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
     <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    
-    <script src="https://raw.githack.com/jeromeetienne/AR.js/2.2.0/aframe/build/aframe-ar.js"></script>
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
     </script>
-    
-    <!--<script>
-        THREEx.ArToolkitContext.baseURL = './three.js'
-    </script>
-    
-    <!--<script src="./script.js"></script> -->
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
     <a-scene
         vr-mode-ui="enabled: false"
-        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
+		embedded
+        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+        
+        <a-camera gps-camera rotation-reader gpsMinDistance="40" gpsTimeInterval="2000"></a-camera>
 
-        <a-camera  gps-camera rotation-reader></a-camera>
+        <a-entity id="gpsModel" gltf-model="assets/magnemite/scene.gltf" rotation="0 0 0" scale="0.10 0.10 0.10" gps-entity-place="longitude: 101.1459128; latitude: 16.4639927;"/>
+       
+	</a-scene>
+    <div id="gpscoord"></div>
+    <div id="bottom-bar">
+        <div id="btn_updatePos" class="btnBar" onclick="getLocation()"> Update Position </div>
+        <div id="btn_setNew" class="btnBar" onclick="setNewObject()"> Set new object </div>
+    </div>
+    <script>
+        var x = document.getElementById("gpscoord");
+        function getLocation()
+        {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
         
-        <!-- <a-box material="color: pink" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128" position="10 1 0"/> -->
-        
-        <a-entity gltf-model="./assets/magnemite/scene.gltf" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128" animation-mixer/>
-        
-        <!--<a-text value="This will always face the user." look-at="[gps-camera]" scale="75 75 75" gps-entity-place="latitude: 16.4639927; longitude: 101.1459128;"></a-text>
-        -->
-    </a-scene>
+        function showPosition(position)
+        {
+            console.log(position);
+            x.innerHTML = "Latitude: " + position.coords.latitude +"<br>Longitude: " + position.coords.longitude;
+        }
+
+        function setNewObject()
+        {
+            console.log("set new object position")
+            navigator.geolocation.getCurrentPosition(setNewPosition);
+            function setNewPosition(position)
+            {
+               // document.getElementById("gpsModel").setAttribute("gps-entity-place","longitude:" + position.coords.latitude + "; latitude: " + position.coords.longitude + ";")
+               $("a-entity#gpsModel").attr("gps-entity-place", "longitude:" + position.coords.longitude + "; latitude: " + position.coords.latitude + ";")
+            }
+        }
+        window.onload = function(){getLocation()};
+    </script>
+    <style>
+        #gpscoord
+        {
+            z-index: 9999;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0px;
+            filter: drop-shadow(9px 1px 2px #797979);
+            color: white;
+        }
+        #bottom-bar
+        {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: black;
+        }
+        .btnBar
+        {
+            height: 100%;
+            width: 50%;
+            float: left;
+            background: grey;
+            font-family: sans-serif;
+            font-size: 1.3em;
+            text-align: center;
+            box-sizing: border-box;
+            padding-top: 17px;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+    </style>
 </body>
